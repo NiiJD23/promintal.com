@@ -81,12 +81,12 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgrou
 /* Hero */
 .hero{position:relative;overflow:hidden;background:radial-gradient(1100px 600px at 85% -10%,#12309E 0%,transparent 60%),linear-gradient(180deg,var(--navy-deep),var(--navy));color:var(--on-navy)}
 .hero .peak{position:absolute;right:-6%;bottom:-30%;width:min(62vw,820px);opacity:.07;pointer-events:none}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding-block:84px 92px}
+.hero-grid{position:relative;display:grid;grid-template-columns:1fr;gap:56px;align-items:center;padding-block:84px 92px}
 .hero-grid>*{min-width:0}
 .hero h1{font-size:clamp(2.6rem,6.2vw,5.4rem);font-weight:400;line-height:.98;margin-top:22px}
 .hero h1 .sky{color:var(--sky)}
 .hero h1 em.s{color:var(--sky-soft)}
-.lede{margin-top:26px;font-size:1.16rem;line-height:1.65;color:#C9D5F5;max-width:56ch}
+.lede{margin-top:26px;font-size:clamp(1.16rem,1.5vw,1.3rem);line-height:1.65;color:#C9D5F5;max-width:none}
 .ctas{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
 .hero-meta{margin-top:44px;display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-navy-mute)}
 .hero-meta span{display:inline-flex;align-items:center;gap:8px}
@@ -499,18 +499,6 @@ footer{background:var(--navy-deep);color:var(--on-navy-mute);border-top:1px soli
         </div>
         <div class="hero-meta"><span>Registered in London, United Kingdom</span><span>UK · Europe · Africa</span><span>Engagements under NDA as standard</span></div>
       </div>
-
-      <aside class="board" aria-label="Illustrative programme board">
-        <div class="board-head"><b>Portfolio board</b><small id="boardWeek">Week 14 · Stage 3 of 5</small></div>
-        <div class="board-tabs" role="group" aria-label="Board view">
-          <button type="button" data-view="delivery" aria-pressed="true">Delivery</button>
-          <button type="button" data-view="funding" aria-pressed="false">Clients</button>
-          <button type="button" data-view="risk" aria-pressed="false">Risk</button>
-        </div>
-        <div id="boardRows"></div>
-        <div class="board-foot" id="boardKpis"></div>
-        <p class="board-note">Illustrative client view of the governance we put in front of sponsors. Switch views above.</p>
-      </aside>
     </div>
   </section>
 
@@ -990,20 +978,6 @@ function copyText(text,el,okMsg){
 }
 document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copyText(b.dataset.copy,document.getElementById('mail'),'Email address copied');});});
 
-/* ---------- Board ---------- */
-var BOARD={
- delivery:{week:'Week 14 · Stage 3 of 5',rows:[['Industry 4.0 automation','g','On track','Gate 3 passed · benefits tracking live',78],['Digital twin build','g','On track','Gate 2 passed · integration testing',61],['Supplier contract renewal','a','Watch','Decision due in 9 days · terms 80% agreed',82],['Operating model change','g','On track','Design approved · pilot in 2 sites',44]],kpis:[['0.98','Cost performance index'],['1.02','Schedule performance index'],['3','Risks escalated']]},
- funding:{week:'Active engagements · by client type',rows:[['Manufacturer · ERP rollout','g','On track','Industry · go-live in 6 weeks',72],['Retail SME · growth plan','g','On track','SME · board review next week',58],['Global services firm · PMO','a','Watch','Multinational · 3 regions onboarding',46],['Executive · leadership coaching','g','On track','Individual · session 5 of 8',63]],kpis:[['4','Client types served'],['92%','Milestones on time'],['3','Continents']]},
- risk:{week:'Top risks · this period',rows:[['Supplier lead times','a','Amber','Mitigation: dual sourcing agreed',60],['Key skills availability','r','Red','Escalated to sponsor this week',30],['Data integration','a','Amber','Interface tests scheduled',55],['Regulatory approval','g','Green','Pre-submission meeting held',85]],kpis:[['14','Open risks'],['-22%','Exposure vs last month'],['1','Red risk']]}
-};
-function renderBoard(v){
-  var b=BOARD[v];document.getElementById('boardWeek').textContent=b.week;
-  document.getElementById('boardRows').innerHTML=b.rows.map(function(r,i){return '<div class="ws"><span class="name">'+esc(r[0])+'</span><span class="rag '+r[1]+'">'+r[2]+'</span><span class="gate">'+esc(r[3])+'</span><div class="bar"><i style="width:'+r[4]+'%;animation-delay:'+(i*.08)+'s"></i></div></div>';}).join('');
-  document.getElementById('boardKpis').innerHTML=b.kpis.map(function(k){return '<div class="kpi"><b>'+esc(k[0])+'</b><span>'+esc(k[1])+'</span></div>';}).join('');
-  document.querySelectorAll('.board-tabs button').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.view===v));});
-}
-document.querySelectorAll('.board-tabs button').forEach(function(x){x.addEventListener('click',function(){renderBoard(x.dataset.view)});});
-renderBoard('delivery');
 
 /* ---------- Home services & rail ---------- */
 document.getElementById('homeServices').innerHTML=SERVICES.map(function(s){
